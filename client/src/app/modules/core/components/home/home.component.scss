@@ -2,4 +2,18 @@
   background-color: var(--secondary-color);
 }
 
+.product__section {
+  padding-top: 0;
+}
+
+.shop__collection--section {
+  padding-bottom: 0;
+}
+
+@media(max-width: 991px) {
+  .shop__collection--img {
+    max-width: 80%;
+    margin-left: 10px
+  }
+}
 

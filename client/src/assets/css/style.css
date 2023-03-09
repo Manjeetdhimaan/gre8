@@ -1,7 +1,8 @@
 @charset "UTF-8";
 :root {
   --primary-color: #3c3836;
-  --secondary-color: #daffe7;
+  --secondary-color: #a4e4b8;
+  --secondary-color-2: #daffe7;
   --hover-color: #ed1d24;
   --yellow-color: #ff9800;
   --foreground-color: #000000;
@@ -42,8 +43,9 @@ html {
 }
 
 body {
-  font-family:"Avenir Next", sans-serif;;
-  font-size: var(--body-font-size, 1.5rem);
+  /* font-family:"Avenir Next", sans-serif; */
+  /* font-size: var(--body-font-size, 1.5rem); */
+  font-size: 15px;
   font-weight: var(--body-font-weight);
   font-style: normal;
   line-height: var(--body-line-height, 26px);
@@ -84,7 +86,7 @@ h5,
 h6 {
   font-weight: var(--headings-weight);
   margin: 0;
-  font-family: var(--frank-ruhl-fonts);
+  /* font-family: var(--frank-ruhl-fonts); */
 }
 .h1,
 h1 {
@@ -649,7 +651,7 @@ hr {
 }
 select {
   word-wrap: normal;
-  font-family: var(--font-lato);
+  /* font-family: var(--font-lato); */
   font-size: var(--body-font-size);
   font-weight: var(--body-font-weight);
   line-height: var(--body-line-height);
@@ -1544,7 +1546,7 @@ body.overlay__active::before {
   -ms-flex-align: center;
   align-items: center;
   color: var(--text-black-color);
-  font-family: var(--jost-fonts);
+  /* font-family: var(--jost-fonts); */
   font-size: 1.5rem;
   line-height: 3.5rem;
 }
@@ -1978,10 +1980,10 @@ body.overlay__active::before {
   opacity: 1;
 }
 .header__menu--link {
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   line-height: 3.5rem;
-  text-transform: uppercase;
-  font-weight: 600;
+  /* text-transform: uppercase; */
+  font-weight: 300;
   border-radius: 2rem;
   color: var(--primary-color);
 }
@@ -2086,7 +2088,7 @@ body.overlay__active::before {
   color: var(--primary-color);
 }
 .header__coupon--text {
-  font-family: var(--jost-fonts);
+  /* font-family: var(--jost-fonts); */
   font-size: 1.5rem;
   font-weight: 500;
   color: var(--text-white-color);
@@ -2912,7 +2914,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 .tab__btn--link {
   font-weight: 500;
-  font-family: var(--inter-fonts);
+  /* font-family: var(--inter-fonts); */
   text-transform: capitalize;
   color: var(--foreground-sub-color);
   border: 0;
@@ -3133,7 +3135,7 @@ input[type="number"]::-webkit-outer-spin-button {
   line-height: 2.6rem;
   background: var(--secondary-color);
   color: var(--text-black-color);
-  font-family: var(--inter-fonts);
+  /* font-family: var(--inter-fonts); */
   position: absolute;
   top: 1.5rem;
   left: 0;
@@ -3155,7 +3157,7 @@ input[type="number"]::-webkit-outer-spin-button {
   color: var(--hover-color);
   font-weight: 600;
   line-height: 1.8rem;
-  font-family: var(--inter-fonts);
+  /* font-family: var(--inter-fonts); */
   font-size: 1.4rem;
 }
 @media only screen and (min-width: 768px) {
@@ -3167,7 +3169,7 @@ input[type="number"]::-webkit-outer-spin-button {
   color: var(--foreground-sub-color);
   margin-left: 0.6rem;
   line-height: 1.8rem;
-  font-family: var(--inter-fonts);
+  /* font-family: var(--inter-fonts); */
   text-decoration: line-through;
   font-size: 1.4rem;
 }
@@ -3184,7 +3186,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 .rating__review--text {
   font-size: 1.2rem;
-  font-family: var(--inter-fonts);
+  /* font-family: var(--inter-fonts); */
   color: var(--foreground-sub-color);
 }
 .product__load--more {
@@ -3437,7 +3439,7 @@ input[type="number"]::-webkit-outer-spin-button {
   padding: 0 1.5rem;
   background: var(--primary-color);
   font-size: 1.2rem;
-  font-family: var(--inter-fonts);
+  /* font-family: var(--inter-fonts); */
   font-weight: 600;
   text-transform: capitalize;
   color: var(--text-white-color);
@@ -3503,14 +3505,14 @@ input[type="number"]::-webkit-outer-spin-button {
   line-height: 3.7rem;
   background: var(--body-background-color);
   font-size: 1.4rem;
-  font-family: var(--inter-fonts);
+  /* font-family: var(--inter-fonts); */
   font-weight: 600;
   text-align: center;
   border-radius: 3px;
 }
 .single__product--countdown .countdown__text {
   font-size: 1.4rem;
-  font-family: var(--inter-fonts);
+  /* font-family: var(--inter-fonts); */
   font-weight: 500;
   color: var(--foreground-sub-color);
   text-align: center;
@@ -3592,7 +3594,7 @@ input[type="number"]::-webkit-outer-spin-button {
   font-size: 1.4rem;
   line-height: 2rem;
   font-weight: 500;
-  font-family: var(--inter-fonts);
+  /* font-family: var(--inter-fonts); */
   color: var(--foreground-sub-color);
 }
 .product__sold--text__number {
@@ -3840,7 +3842,7 @@ input[type="number"]::-webkit-outer-spin-button {
   }
 }
 .banner__fullwidth--content__subtitle {
-  font-family: var(--primary-color);
+  /* font-family: var(--primary-color); */
   font-weight: 400;
   margin-bottom: 1rem;
 }
@@ -7457,7 +7459,7 @@ input.quickview__value--number {
   }
 }
 .about__experience--years__inner {
-  font-family: var(--frank-ruhl-fonts);
+  /* font-family: var(--frank-ruhl-fonts); */
 }
 .about__experience--title {
   font-size: 1.3rem;
@@ -11248,7 +11250,7 @@ details > summary::-webkit-details-marker {
 .image__width--text__link {
   font-size: 1.5rem;
   font-weight: 500;
-  font-family: var(--frank-ruhl-fonts);
+  /* font-family: var(--frank-ruhl-fonts); */
 }
 @media only screen and (min-width: 992px) {
   .image__width--text__link {

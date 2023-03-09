@@ -1,3 +1,7 @@
 .header__menu--link {
-  font-weight: 100;
+  font-weight: 300;
+}
+
+.sticky .header__menu--link:hover {
+  color: var(--text-black-color) !important
 }
