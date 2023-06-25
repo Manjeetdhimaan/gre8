@@ -47,6 +47,22 @@ const userSchema = new mongoose.Schema({
             }
         }]
     },
+    wishlist: {
+        items: [{
+            productId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Product',
+                required: true
+            },
+            quantity: {
+                type: Number,
+                required: true
+            },
+            size: {
+                type: String || Number
+            }
+        }]
+    },
     address: {
         type: Object,
         street: {
@@ -201,5 +217,99 @@ userSchema.methods.generateJwt = function (remeberMe) {
             expiresIn: remeberMe ? '365d' : process.env.JWT_EXP || devEnv.JWT_EXP
         });
 }
+
+
+userSchema.methods.addToWishlist = function (product, productQuantity, increaseQuantity, size) {
+    const wishlistProductIndex = this.wishlist.items.findIndex(cp => {
+        return cp.productId.toString() === product._id.toString();
+    });
+    let newQuantity = 1;
+    const updatedWishlistItems = [...this.wishlist.items];
+    if (wishlistProductIndex >= 0) {
+        if (productQuantity >= 1 && !increaseQuantity) {
+            newQuantity = productQuantity;
+        } else {
+            newQuantity = this.wishlist.items[wishlistProductIndex].quantity + productQuantity;
+        }
+        updatedWishlistItems[wishlistProductIndex].quantity = newQuantity;
+        // console.log(product)
+        if(size) {
+            updatedWishlistItems[wishlistProductIndex].size = size;
+        }
+    } else {
+        newQuantity = productQuantity ? +productQuantity : newQuantity;
+
+        if(size) {
+            updatedWishlistItems.push({
+                productId: product._id,
+                quantity: newQuantity,
+                size: size
+            });
+        }
+        else {
+            updatedWishlistItems.push({
+                productId: product._id,
+                quantity: newQuantity
+            });
+        }
+       
+    }
+    const updatedWishlist = {
+        items: updatedWishlistItems
+    };
+    this.wishlist = updatedWishlist;
+    return this.save();
+};
+
+userSchema.methods.addMultipleToWishlist = function (products) {
+    const updatedWishlistItems = [...this.wishlist.items];
+    let newQuantity = 1;
+    if (this.wishlist && this.wishlist.items.length > 0) {
+        const wishlistProdIds = [];
+        this.wishlist.items.map(cp => {
+            wishlistProdIds.push(cp.productId.toString());
+        })
+        products.map((p, index) => {
+            if (wishlistProdIds.includes(p.productId.toString())) {
+                if (this.wishlist.items[index]) {
+                    newQuantity = this.wishlist.items[index].quantity + p.quantity;
+                    updatedWishlistItems[index].quantity = newQuantity;
+                }
+            } else {
+                updatedWishlistItems.push({
+                    productId: p.productId,
+                    quantity: p.quantity
+                })
+            }
+        });
+    } else {
+        products.map(p => {
+            updatedWishlistItems.push({
+                productId: p.productId,
+                quantity: p.quantity
+            });
+        })
+    }
+    const updatedWishlist = {
+        items: updatedWishlistItems
+    };
+    this.wishlist = updatedWishlist;
+    return this.save();
+};
+
+userSchema.methods.removeFromWishlist = function (productId) {
+    const updatedWishlistItems = this.wishlist.items.filter(item => {
+        return item.productId.toString() !== productId.toString();
+    });
+    this.wishlist.items = updatedWishlistItems;
+    return this.save();
+};
+
+userSchema.methods.clearWishlist = function () {
+    this.wishlist = {
+        items: []
+    };
+    return this.save();
+};
 
 mongoose.model('User', userSchema);

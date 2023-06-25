@@ -17,6 +17,7 @@ import { AccordionItemComponent } from './components/ui-components/accordion/acc
 import { CartIconComponent } from './components/ui-components/cart-icon/cart-icon.component';
 import { LoadingSpinnerComponent } from './components/ui-components/loading-spinner/loading-spinner.component';
 import { OrderTrackingComponent } from './components/ui-components/order-tracking/order-tracking.component';
+import { WishlistIconComponent } from './components/ui-components/wishlist-icon/wishlist-icon.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { OrderTrackingComponent } from './components/ui-components/order-trackin
     AccordionItemComponent,
     CartIconComponent,
     LoadingSpinnerComponent,
-    OrderTrackingComponent
+    OrderTrackingComponent,
+    WishlistIconComponent
   ],
   imports: [
     CommonModule,
@@ -54,7 +56,8 @@ import { OrderTrackingComponent } from './components/ui-components/order-trackin
     AccordionItemComponent,
     CartIconComponent,
     LoadingSpinnerComponent,
-    OrderTrackingComponent
+    OrderTrackingComponent,
+    WishlistIconComponent
   ]
 })
 export class SharedModule { }

@@ -616,3 +616,127 @@ module.exports.NewPassword = async (req, res) => {
         });
     })
 }
+
+// User Wishlist methods
+module.exports.postWishlist = async (req, res, next) => {
+    const user = await User.findById(req._id);
+    if (!user) {
+        return res.status(404).json({
+            success: false,
+            message: 'No account found with this id'
+        })
+    }
+    const prodId = req.body.productId;
+    const quantity = req.body.quantity;
+    Product.findById(prodId)
+        .then(product => {
+            return user.addToWishlist(product, quantity, req.body.increaseQuantity, req.body.size);
+        })
+        .then(result => {
+            let totalPrice = 0;
+            let quantity = 0;
+            const options = {
+                path: 'wishlist.items.productId'
+            };
+            user.populate(options).then(user => {
+                const products = user.wishlist.items;
+                products.map(prod => {
+                    totalPrice += +prod.productId.price * +prod.quantity;
+                    quantity += prod.quantity;
+                })
+                return {totalPrice: totalPrice, quantity: quantity};
+            }).then(wishlist => {
+                return res.status(201).json({
+                    success: true,
+                    message: 'Product added to wishlist',
+                    totalPrice: wishlist.totalPrice,
+                    quantity: wishlist.quantity
+                })
+            })
+        })
+        .catch(err => {
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+        });
+};
+
+module.exports.postMultipleToWishlist = async (req, res, next) => {
+    const user = await User.findById(req._id);
+    if (!user) {
+        return res.status(404).json({
+            success: false,
+            message: 'No account found with this id'
+        })
+    }
+
+    const products = [];
+    for (let p of req.body.items) {
+        await Product.findById(p.productId)
+        .then(product => {
+            if(product)  {
+                products.push(p);
+            }
+        })
+        .catch(err => {
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+        });
+    }
+    await user.addMultipleToWishlist(products);
+    return res.status(201).json({
+        success: true,
+        messsage: 'All products added to wishlist'
+    });
+};
+
+module.exports.getWishlist = async (req, res, next) => {
+    const user = await User.findById(req._id);
+    if(!user) {
+        return res.status(404).json({
+            success: false,
+            message: 'User not found'
+        })
+    }
+    const options = {
+        path: 'wishlist.items.productId'
+    };
+
+    user.populate(options).then(user => {
+            const products = user.wishlist.items;
+            return res.status(200).json({
+                success: true,
+                message: 'Wishlist fetched successfully!',
+                products: products
+            })
+        })
+        .catch(err => {
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+        });
+};
+
+module.exports.postWishlistDeleteProduct = async (req, res, next) => {
+    const prodId = req.body.productId;
+    const user = await User.findById(req._id);
+    if (!user) {
+        return res.status(404).json({
+            success: false,
+            message: 'User not found',
+        })
+    }
+    user.removeFromWishlist(prodId)
+        .then(result => {
+            return res.status(201).json({
+                success: true,
+                message: 'Wishlist Updated'
+            });
+        })
+        .catch(err => {
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+        });
+};

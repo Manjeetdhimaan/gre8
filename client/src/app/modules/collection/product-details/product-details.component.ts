@@ -11,6 +11,7 @@ import { CartService, PostCartResponse } from 'src/app/shared/services/cart.serv
 import { ProductService } from 'src/app/shared/services/product.service';
 import { ProductResponse, ProductsResponse } from 'src/app/shared/models/responses.model';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { WishlistService } from 'src/app/shared/services/wishlist.service';
 
 @Component({
   selector: 'app-product-details',
@@ -33,6 +34,9 @@ export class ProductDetailsComponent {
   selectedColor: string;
   selectedSize: string;
   isSubmitted = false;
+  bagType = 'cart';
+  route = 'wishlist';
+  currentUrl = window.location.href;
 
   customOptionsRelated: OwlOptions = {
     items: 4,
@@ -54,7 +58,7 @@ export class ProductDetailsComponent {
       }
     }
   }
-  constructor( private activatedRoute: ActivatedRoute, private productService: ProductService, private cartService: CartService, private router: Router, public gallery: Gallery, public lightbox: Lightbox, private title: Title, private authService: AuthService ) {}
+  constructor( private activatedRoute: ActivatedRoute, private productService: ProductService, private cartService: CartService, private router: Router, public gallery: Gallery, public lightbox: Lightbox, private title: Title, private authService: AuthService, private wishlistService: WishlistService ) {}
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -144,6 +148,8 @@ export class ProductDetailsComponent {
 
   onAddtoCart(productId: string) {
     this.isSubmitted = true;
+    this.bagType = 'cart';
+    this.route = 'cart';
     if(!this.selectedSize && this.product.sizes && this.product.sizes.length > 0) {
       return;
     }
@@ -201,6 +207,40 @@ export class ProductDetailsComponent {
         this.items = this.imageData.map(item => new ImageItem({ src: item.srcUrl, thumb: item.previewUrl }));
       }
     })
+  }
+
+
+  onAddtoWishlist(productId: string) {
+    this.bagType = 'wishlist';
+    this.route = 'wishlist';
+    this.isSubmitted = true;
+    if(!this.selectedSize && this.product.sizes && this.product.sizes.length > 0) {
+      return;
+    }
+    const wishlistItem = {
+      productId: productId,
+      quantity: this.quantity,
+      size: this.selectedSize
+    }
+
+    if (!this.authService.isUserLoggedIn()) {
+      this.wishlistService.setWishlistToLocalStorage(wishlistItem);
+      this.isSnackbarShown = true;
+      // this.messageService.add({severity:'success', summary:'Success', detail: 'Cart updated'});
+    }
+    else {
+      // if user is logged in
+      this.isLoadingCart = true;
+      this.wishlistService.postWishlist(wishlistItem, true).subscribe((res: PostCartResponse) => {
+        this.isLoadingCart = false;
+        this.isSnackbarShown = true;
+        this.wishlistService.serverWishlist$.next({totalPrice: +res.totalPrice, quantity: +res.quantity})
+        // this.messageService.add({ severity: 'success', summary: 'Success', detail: res['message'] });
+      }, err => {
+        this.isLoadingCart = false;
+        this._errorHandler(err);
+      })
+    }
   }
 
 }

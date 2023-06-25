@@ -11,13 +11,17 @@ import { RouterModule } from '@angular/router';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ContactComponent } from './components/contact/contact.component';
+import { AboutComponent } from './components/about/about.component';
+import { WishlistComponent } from './components/wishlist/wishlist.component';
 
 @NgModule({
   declarations: [
     HomeComponent,
     CartComponent,
     CheckoutComponent,
-    ContactComponent
+    ContactComponent,
+    AboutComponent,
+    WishlistComponent
   ],
   imports: [
     CommonModule,

@@ -43,7 +43,7 @@ export class CheckoutComponent implements OnInit {
     "currency": "INR",
     "name": "Younedia",
     "description": "Test Transaction",
-    "image": "/assets/img/gret/gret-logo-black.png",
+    "image": "/assets/img/gret/gre8-logo.png",
     "order_id": "order_IluGWxBm9U8zJ8", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
     "handler": (res: any) => {
       console.log(res);

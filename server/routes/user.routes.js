@@ -22,6 +22,12 @@ router.get('/get-user-cart', jwtHelper.verifyJwtToken, ctrlUser.getCart);
 router.post('/post-many-to-cart', jwtHelper.verifyJwtToken, ctrlUser.postMultipleToCart);
 router.post('/delete-cart-product', jwtHelper.verifyJwtToken, ctrlUser.postCartDeleteProduct);
 
+// wishlist methods
+router.post('/post-user-wishlist', jwtHelper.verifyJwtToken, ctrlUser.postWishlist);
+router.get('/get-user-wishlist', jwtHelper.verifyJwtToken, ctrlUser.getWishlist);
+router.post('/post-many-to-wishlist', jwtHelper.verifyJwtToken, ctrlUser.postMultipleToWishlist);
+router.post('/delete-wishlist-product', jwtHelper.verifyJwtToken, ctrlUser.postWishlistDeleteProduct);
+
 router.post('/req-reset-password', ctrlUser.ResetPassword);
 router.post('/new-password', ctrlUser.NewPassword);
 router.post('/valid-password-token', ctrlUser.ValidPasswordToken);

@@ -52,7 +52,9 @@
             <div class="product__details--info__price mb-12">
               <span class="current__price">{{ product.currentPrice| currency: product.currency }}</span>
               <span class="old__price">{{ product.mrpPrice| currency: product.currency }}</span>
-              <span class="discount_badge" *ngIf="+product.mrpPrice > +product.currentPrice && +(100 - (+product.currentPrice* 100)/+product.mrpPrice).toFixed(0) > 0"> {{(100 - (+product.currentPrice* 100)/+product.mrpPrice).toFixed(0) }}% off</span>
+              <span class="discount_badge"
+                *ngIf="+product.mrpPrice > +product.currentPrice && +(100 - (+product.currentPrice* 100)/+product.mrpPrice).toFixed(0) > 0">
+                {{(100 - (+product.currentPrice* 100)/+product.mrpPrice).toFixed(0) }}% off</span>
               <span>( inclusive of all taxes )</span>
             </div>
             <p class="product__details--info__desc mb-15">{{ product.description }}</p>
@@ -75,11 +77,13 @@
               </div>
               <div class="product__variant--list mb-20" *ngIf="product.sizes && product.sizes.length > 0">
                 <fieldset class="variant__input--fieldset">
-                  <legend class="product__variant--title mb-8" style="text-transform: capitalize;">Selected Size : <b> {{ selectedSize }}</b></legend>
+                  <legend class="product__variant--title mb-8" style="text-transform: capitalize;">Selected Size : <b>
+                      {{ selectedSize }}</b></legend>
                   <ul class="variant__size d-flex">
                     <li class="variant__size--list" *ngFor="let size of product.sizes">
                       <input id="size" name="size" type="hidden">
-                      <label style="border: 1px solid var(--border-color);" class="variant__size--value red" for="size" (click)="onSelectSize(size)">{{ size.slice(0,1).toUpperCase() }}</label>
+                      <label style="border: 1px solid var(--border-color);" class="variant__size--value red" for="size"
+                        (click)="onSelectSize(size)">{{ size.slice(0,1).toUpperCase() }}</label>
                     </li>
                   </ul>
                   <h4 style="color: red" *ngIf="!selectedSize && isSubmitted">Please select a size</h4>
@@ -91,7 +95,29 @@
                     <app-input-spinner [value]="quantity" (change)="onUpdateQuantity($event)"></app-input-spinner>
                   </label>
                 </div>
-                <button class="primary__btn quickview__cart--btn" type="button" (click)="onAddtoCart(product._id)">Add To Cart</button>
+                <button class="primary__btn quickview__cart--btn" type="button" (click)="onAddtoCart(product._id)">Add
+                  To Cart</button>
+
+              </div>
+              <div class="product__variant--list mb-20">
+
+                <a (click)="onAddtoWishlist(product._id)" class="variant__wishlist--icon mb-15" title="Add to wishlist">
+                  <svg class="quickview__variant--wishlist__svg" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 512 512">
+                    <path
+                      d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0018 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81z"
+                      fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                      stroke-width="32" />
+                  </svg>
+                  Add to Wishlist
+                </a>
+                <div class="share-buttons">
+                  <p>Share Product</p>
+                  <share-buttons theme="circles-dark"
+                    [include]="['copy', 'facebook', 'email', 'sms', 'telegram', 'twitter', 'whatsapp']"
+                    [showIcon]="true" [showText]="true" [url]="currentUrl" description="Gre8 Products" >
+                  </share-buttons>
+                </div>
               </div>
             </div>
 
@@ -186,4 +212,5 @@
 
 <app-loading-spinner *ngIf="isLoadingCart"></app-loading-spinner>
 
-<app-snackbar *ngIf="product" [name]="product.name" [isShown]="isSnackbarShown"></app-snackbar>
+<app-snackbar *ngIf="product" [bagType]="bagType" [route]="route" [name]="product.name"
+  [isShown]="isSnackbarShown"></app-snackbar>

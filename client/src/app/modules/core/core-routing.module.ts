@@ -5,6 +5,8 @@ import { HomeComponent } from './components/home/home.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { UserAuthGuard } from 'src/app/shared/services/auth/user-auth-guard';
 import { ContactComponent } from './components/contact/contact.component';
+import { AboutComponent } from './components/about/about.component';
+import { WishlistComponent } from './components/wishlist/wishlist.component';
 
 
 const routes: Routes = [
@@ -19,7 +21,13 @@ const routes: Routes = [
   },
   {
     path: 'contact-us', component: ContactComponent, title: 'Contact Us - Gre8'
-  }
+  },
+  {
+    path: 'about', component: AboutComponent, title: 'About Us - Gre8'
+  },
+  {
+    path: 'wishlist', component: WishlistComponent, title: 'Wishlist - Gre8'
+  },
 ]
 @NgModule({
   imports: [

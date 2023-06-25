@@ -7,6 +7,8 @@ import { Component, Input } from '@angular/core';
 })
 export class SnackbarComponent {
   @Input() name: string;
+  @Input() bagType: string = 'cart';
+  @Input() route: string = 'cart';
   @Input() isShown = false;
 
 }
